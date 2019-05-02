@@ -19,8 +19,8 @@
 class LCDCharConverter {
 	public: 
 		LCDCharConverter(LiquidCrystal_I2C* lcd);
-		void display(char * message);
-		char* convert(char * message);
+		void display(char* message, uint8_t col, uint8_t row);
+		char* convert(char* message);
 		void reset();
 		inline int getLength() { return _len; }
 		
