@@ -60,8 +60,8 @@ char LCDCharConverter::parseChar(char* message, int* iref) {
    }else if(message[i] >= 0xC2 && message[i] <= 0xDF) {
       if (message[i] == 0xC2) {
          i++; *iref = i;
-         //° (fok) => karakter (0xB0) -> 161
-         if (message[i] == 0xB0) { return 161; }
+         //° (fok) => karakter (0xB0) -> 223
+         if (message[i] == 0xB0) { return 223; }
       }else if(message[i] == 0xC3) {
            i++; *iref = i;
            switch (message[i]) {
