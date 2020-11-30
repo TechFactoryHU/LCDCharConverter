@@ -54,17 +54,17 @@ void LCDCharConverter::reset() {
 char LCDCharConverter::parseChar(char* message, int* iref) {
    int i = (int)*iref;
    //1 byte
-   if (message[i] >= 0x01 && message[i] <= 0x7F) {
+   if ((byte)message[i] >= 0x01 && (byte)message[i] <= 0x7F) {
        return message[i];
    //2 byte 
-   }else if(message[i] >= 0xC2 && message[i] <= 0xDF) {
-      if (message[i] == 0xC2) {
+   }else if((byte)message[i] >= 0xC2 && (byte)message[i] <= 0xDF) {
+      if ((byte)message[i] == 0xC2) {
          i++; *iref = i;
          //° (fok) => karakter (0xB0) -> 223
-         if (message[i] == 0xB0) { return 223; }
-      }else if(message[i] == 0xC3) {
+         if ((byte)message[i] == 0xB0) { return 223; }
+      }else if((byte)message[i] == 0xC3) {
            i++; *iref = i;
-           switch (message[i]) {
+           switch ((byte)message[i]) {
               //81 - Á
               case 0x81: return loadCustomChar(0); break;
               //89 - É
@@ -99,9 +99,9 @@ char LCDCharConverter::parseChar(char* message, int* iref) {
               //case 0xB6: return loadCustomChar(15); break;  
            }
 
-      }else if(message[i] == 0xC5) {
+      }else if((byte)message[i] == 0xC5) {
           i++; *iref = i;
-          switch (message[i]) {
+          switch ((byte)message[i]) {
               //90 - Ő
               case 0x90: return loadCustomChar(7); break;
               //B0 - Ű
@@ -114,9 +114,9 @@ char LCDCharConverter::parseChar(char* message, int* iref) {
      
       }
    //3 byte
-   }else if(message[i] >= 0xE0 && message[i] <= 0xEF) {}
+   }else if((byte)message[i] >= 0xE0 && (byte)message[i] <= 0xEF) {}
    //4 byte
-   else if(message[i] >= 0xF0) {}
+   else if((byte)message[i] >= 0xF0) {}
    //ismeretlen karakter []
    return 255;
 }
@@ -126,18 +126,18 @@ int LCDCharConverter::getRealLength(char* message) {
 	int nl = 0;
 	for (int i=0; i<len; i++) {
 	   //1 byte karakter
-	   if (message[i] >= 0x01 && message[i] <= 0x7F) {
+	   if ((byte)message[i] >= 0x01 && (byte)message[i] <= 0x7F) {
 		   nl++;
 	   //2 byte karakter
-	   }else if(message[i] >= 0xC2 && message[i] <= 0xDF) {
+	   }else if((byte)message[i] >= 0xC2 && (byte)message[i] <= 0xDF) {
 		   nl++; i++;
 	   } 
 	   //3 byte karakter
-	   else if(message[i] >= 0xE0 && message[i] <= 0xEF) {
+	   else if((byte)message[i] >= 0xE0 && (byte)message[i] <= 0xEF) {
 		   nl++; i+=2;
 	   }
 	   //4 byte karakter
-	   else if(message[i] >= 0xF0) {
+	   else if((byte)message[i] >= 0xF0) {
 		   nl++; i+=3;
 	   }
 	   //ismeretlen, 1 byte-t számolunk 
